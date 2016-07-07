@@ -1,0 +1,124 @@
+# file: roles/jenkins/install/tasks/main.yml
+
+- name: stop Jenkins, if running
+  service: name={{ package_name }} state=stopped
+  ignore_errors: true
+
+- name: import Jenkins GPG Key
+  rpm_key: key={{ key_url }}
+
+- name: install Jenkins Yum Repository
+  get_url: url={{ repo_url }} dest=/etc/yum.repos.d/jenkins.repo
+
+- name: install Jenkins
+  yum: name={{ package_name }}
+
+- name: set JENKINS_PORT in /etc/sysconfig/jenkins
+  replace: dest=/etc/sysconfig/jenkins regexp='^JENKINS_PORT="8080"' replace='JENKINS_PORT="{{ jenkins_port }}"' backup=yes
+
+- name: set JENKINS_USER to root in /etc/sysconfig/jenkins
+  replace: dest=/etc/sysconfig/jenkins regexp='^JENKINS_USER="jenkins"' replace='JENKINS_USER="{{ jenkins_user }}"' backup=no
+
+- name: set JENKINS_AJP_PORT to -1 in /etc/sysconfig/jenkins
+  replace: dest=/etc/sysconfig/jenkins regexp='^JENKINS_AJP_PORT="8009"' replace='JENKINS_AJP_PORT="-1"' backup=yes
+
+- name: copy jenkins data dir archive fragments
+  copy: src={{ item }} dest=/tmp
+  with_items:
+    - "{{ jenkins_data_archive }}._aa"
+    - "{{ jenkins_data_archive }}._ab"
+    - "{{ jenkins_data_archive }}._ac"
+    - "{{ jenkins_data_archive }}._ad"
+    - "{{ jenkins_data_archive }}._ae"
+    - "{{ jenkins_data_archive }}._af"
+    - "{{ jenkins_data_archive }}._ag"
+    - "{{ jenkins_data_archive }}._ah"
+    - "{{ jenkins_data_archive }}._ai"
+    - "{{ jenkins_data_archive }}._aj"
+    - "{{ jenkins_data_archive }}._ak"
+    - "{{ jenkins_data_archive }}._al"
+    - "{{ jenkins_data_archive }}._am"
+    - "{{ jenkins_data_archive }}._an"
+    - "{{ jenkins_data_archive }}._ao"
+    - "{{ jenkins_data_archive }}._ap"
+    - "{{ jenkins_data_archive }}._aq"
+    - "{{ jenkins_data_archive }}._ar"
+    - "{{ jenkins_data_archive }}._as"
+    - "{{ jenkins_data_archive }}._at"
+    - "{{ jenkins_data_archive }}._au"
+    - "{{ jenkins_data_archive }}._av"
+    - "{{ jenkins_data_archive }}._aw"
+    - "{{ jenkins_data_archive }}._ax"
+    - "{{ jenkins_data_archive }}._ay"
+    - "{{ jenkins_data_archive }}._az"
+    - "{{ jenkins_data_archive }}._ba"
+    - "{{ jenkins_data_archive }}._bb"
+    - "{{ jenkins_data_archive }}._bc"
+    - "{{ jenkins_data_archive }}._bd"
+    - "{{ jenkins_data_archive }}._be"
+    - "{{ jenkins_data_archive }}._bf"
+    - "{{ jenkins_data_archive }}._bg"
+    - "{{ jenkins_data_archive }}._bh"
+    - "{{ jenkins_data_archive }}._bi"
+    - "{{ jenkins_data_archive }}._bj"
+    - "{{ jenkins_data_archive }}._bk"
+    - "{{ jenkins_data_archive }}._bl"
+    - "{{ jenkins_data_archive }}._bm"
+    - "{{ jenkins_data_archive }}._bn"
+    - "{{ jenkins_data_archive }}._bo"
+    - "{{ jenkins_data_archive }}._bp"
+    - "{{ jenkins_data_archive }}._bq"
+    - "{{ jenkins_data_archive }}._br"
+    - "{{ jenkins_data_archive }}._bs"
+    - "{{ jenkins_data_archive }}._bt"
+    - "{{ jenkins_data_archive }}._bu"
+    - "{{ jenkins_data_archive }}._bv"
+    - "{{ jenkins_data_archive }}._bw"
+    - "{{ jenkins_data_archive }}._bx"
+    - "{{ jenkins_data_archive }}._by"
+    - "{{ jenkins_data_archive }}._bz"
+    - "{{ jenkins_data_archive }}._ca"
+    - "{{ jenkins_data_archive }}._cb"
+    - "{{ jenkins_data_archive }}._cc"
+    - "{{ jenkins_data_archive }}._cd"
+    - "{{ jenkins_data_archive }}._ce"
+    - "{{ jenkins_data_archive }}._cf"
+    - "{{ jenkins_data_archive }}._cg"
+    - "{{ jenkins_data_archive }}._ch"
+    - "{{ jenkins_data_archive }}._ci"
+    - "{{ jenkins_data_archive }}._cj"
+    - "{{ jenkins_data_archive }}._ck"
+    - "{{ jenkins_data_archive }}._cl"
+    - "{{ jenkins_data_archive }}._cm"
+    - "{{ jenkins_data_archive }}._cn"
+    - "{{ jenkins_data_archive }}._co"
+    - "{{ jenkins_data_archive }}._cp"
+    - "{{ jenkins_data_archive }}._cq"
+    - "{{ jenkins_data_archive }}._cr"
+    - "{{ jenkins_data_archive }}._cs"
+    - "{{ jenkins_data_archive }}._ct"
+    - "{{ jenkins_data_archive }}._cu"
+    - "{{ jenkins_data_archive }}._cv"
+    - "{{ jenkins_data_archive }}._cw"
+    - "{{ jenkins_data_archive }}._cx"
+    - "{{ jenkins_data_archive }}._cy"
+    - "{{ jenkins_data_archive }}._cz"
+    - "{{ jenkins_data_archive }}._da"
+    - "{{ jenkins_data_archive }}._db"
+    - "{{ jenkins_data_archive }}._dc"
+
+- name: join fragments
+  command: sh -c "cat /tmp/{{ jenkins_data_archive_fragments }} > /tmp/{{ jenkins_data_archive }}"
+
+- name: delete /var/lib/jenkins
+  file: path=/var/lib/jenkins state=absent
+
+- name: unarchive jenkins data dir
+  unarchive: src="/tmp/{{ jenkins_data_archive }}" dest=/var/lib copy=no
+  environment:
+    LANG: "C"
+    LC_ALL: "C"
+    LC_MESSAGES: "C"
+
+- name: start Jenkins
+  service: name={{ package_name }} state=started
