@@ -30,3 +30,6 @@
 
 - name: create dataset csv to /tmp
   template: src=keys.csv dest=/tmp mode=u=rw,g=r,o=r
+
+- name: copy PostgreSQL JDBC Driver jar
+  copy: src={{ jmeter_pgsql_jdbc_jar }} dest={{ jmeter_home_dir }}/lib/ext
