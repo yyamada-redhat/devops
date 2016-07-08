@@ -1,4 +1,0 @@
-# file: openjdk.yml
-- hosts: servers
-  roles:
-    - { role: oraclejdk/install, tags: ["oraclejdk/install"] }

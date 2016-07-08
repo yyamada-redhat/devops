@@ -9,8 +9,6 @@ hosts ファイル (インベントリ) 中に JBoss EAP, PostgreSQL, Jenkins �
 ###### ファイル設定例
 
 ```
-[servers]
-192.168.140.137
 [eapservers]
 192.168.140.137
 [dbservers]
@@ -31,14 +29,14 @@ https://access.redhat.com/jbossnetwork/restricted/softwareDetail.html?softwareId
 __$REMOTE_USERNAME__ には SSH 接続ユーザ名を指定する。
 
 ```
-$ ansible servers -i hosts -m ping -u $REMOTE_USERNAME -k
+$ ansible eapservers -i hosts -m ping -u $REMOTE_USERNAME -k
 SSH password:
 192.168.140.137 | success >> {
     "changed": false,
     "ping": "pong"
 }
 
-$ ansible servers -i hosts -m setup -$REMOTE_USERNAME -k
+$ ansible eapservers -i hosts -m setup -$REMOTE_USERNAME -k
 SSH password:
 192.168.140.137 | success >> {
     "ansible_facts": {
