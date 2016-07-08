@@ -32,6 +32,7 @@
 		<version.maven.war.plugin>2.6</version.maven.war.plugin>
 		<version.maven.ear.plugin>2.10.1</version.maven.ear.plugin>
 		<version.org.wildfly.plugin>1.0.2.Final</version.org.wildfly.plugin>
+		<version.org.jacoco.plugin>0.7.7.201606060606</version.org.jacoco.plugin>
 		<!-- ===== Red Hat supported library versions ===== -->
 		<version.jboss.bom.eap>7.0.0.GA</version.jboss.bom.eap>
 		<version.org.jboss.spec>1.0.3.Final</version.org.jboss.spec>
@@ -60,7 +61,7 @@
 			<name>Red Hat Early Access Maven Repository</name>
 			<url>https://maven.repository.redhat.com/earlyaccess/all/</url>
 		</repository>
-		<!-- <repository> <id>cloudera</id> <name>Cloudera Maven Repository</name> 
+		<!-- <repository> <id>cloudera</id> <name>Cloudera Maven Repository</name>
 			<url>https://repository.cloudera.com/artifactory/cloudera-repos/</url> </repository> -->
 		<repository>
 			<id>jboss</id>
@@ -315,6 +316,50 @@
 			<properties>
 				<environment.id>prod</environment.id>
 			</properties>
+		</profile>
+		<profile>
+			<id>sonar-coverage</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.jacoco</groupId>
+							<artifactId>jacoco-maven-plugin</artifactId>
+							<version>${version.org.jacoco.plugin}</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<configuration>
+							<append>true</append>
+						</configuration>
+						<executions>
+							<execution>
+								<id>agent-for-ut</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>agent-for-it</id>
+								<goals>
+									<goal>prepare-agent-integration</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jacoco-site</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>
