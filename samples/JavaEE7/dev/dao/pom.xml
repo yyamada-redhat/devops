@@ -8,7 +8,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>dao</artifactId>
-	<name>CI/CD Sample - ${project.artifactId}</name>
+	<name>DevOps Sample Order Management - ${project.artifactId}</name>
 	<!-- ================================================================== -->
 	<!-- Properties -->
 	<!-- ================================================================== -->

@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>ear</artifactId>
 	<packaging>ear</packaging>
-	<name>CI/CD Sample - ${project.artifactId}</name>
+	<name>DevOps Sample Order Management - ${project.artifactId}</name>
 	<!-- ================================================================== -->
 	<!-- Properties -->
 	<!-- ================================================================== -->
