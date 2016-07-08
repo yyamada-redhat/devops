@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>web</artifactId>
 	<packaging>war</packaging>
-	<name>CI/CD Sample - ${project.artifactId}</name>
+	<name>DevOps Sample Order Management - ${project.artifactId}</name>
 	<!-- ================================================================== -->
 	<!-- Properties -->
 	<!-- ================================================================== -->

@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>entity</artifactId>
-	<name>CI/CD Sandbox - ${project.artifactId}</name>
+	<name>DevOps Sample Order Management - ${project.artifactId}</name>
 	<!-- ================================================================== -->
 	<!-- Properties -->
 	<!-- ================================================================== -->
