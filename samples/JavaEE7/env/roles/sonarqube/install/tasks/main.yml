@@ -10,6 +10,9 @@
 - name: download SonarQube
   get_url: url={{ sonarqube_download_url }} dest={{ sonarqube_install_dir }}
 
+- name: install unzip
+  yum: name=unzip state=present
+
 - name: unarchive SonarQube binary file
   unarchive: src="{{ sonarqube_install_dir }}/{{ sonarqube_archive }}" dest={{ sonarqube_install_dir }} copy=no
   environment:
