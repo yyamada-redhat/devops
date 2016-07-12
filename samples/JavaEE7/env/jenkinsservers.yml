@@ -11,3 +11,5 @@
     - { role: ansible/install, tags: ["ansible/install"] }
     - { role: jmeter/install, tags: ["jmeter/install"] }
     - { role: sonarqube/install, tags: ["sonarqube/install"] }
+    - { role: ruby/install, tags: ["serverspec/install"] }
+    - { role: serverspec/install, tags: ["serverspec/install"] }
