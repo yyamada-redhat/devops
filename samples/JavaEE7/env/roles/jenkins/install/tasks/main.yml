@@ -1,5 +1,8 @@
 # file: roles/jenkins/install/tasks/main.yml
 
+- name: ignore requiretty for sudo by root
+  lineinfile: dest=/etc/sudoers line='Defaults:root   !requiretty'
+
 - name: stop Jenkins, if running
   service: name={{ package_name }} state=stopped
   ignore_errors: true
