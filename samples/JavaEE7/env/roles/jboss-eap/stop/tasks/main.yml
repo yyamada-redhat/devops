@@ -1,5 +1,0 @@
-# file: roles/jboss-eap/stop/tasks/main.yml
-
-- name: stop JBoss EAP service
-  service: name=jboss-eap state=stopped
-  ignore_errors: True

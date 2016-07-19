@@ -1,3 +1,0 @@
-# file: roles/postgresql/install/vars/main.yml
-
-service_name: postgresql-9.4

@@ -1,4 +1,0 @@
-# file: roles/jboss-eap/copy/tasks/main.yml
-
-- name: copy JBoss EAP archive
-  copy: src={{ eap_archive }} dest={{ destination }}
