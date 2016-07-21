@@ -1,6 +1,6 @@
 stage 'build'
 node {
-    git url: 'https://github.com/ytsuboi-redhat/devops-samples-JavaEE7.git'
+    git url: 'https://github.com/yyamada-redhat/devops.git'
     withEnv(["PATH+MAVEN=${tool 'maven 3.3.9'}/bin"]) {
         sh "mvn clean install -f dev -P development -P sonar-coverage"
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
@@ -34,7 +34,9 @@ node {
 stage 'ui-test'
 node {
     withEnv(["PATH+MAVEN=${tool 'maven 3.3.9'}/bin"]) {
-        sh "mvn test -f selenium"
+        wrap([$class: 'Xvfb']) {
+            sh "mvn test -f selenium"
+        }
     }
 }
 
