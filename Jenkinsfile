@@ -34,7 +34,9 @@ node {
 stage 'ui-test'
 node {
     withEnv(["PATH+MAVEN=${tool 'maven 3.3.9'}/bin"]) {
-        sh "mvn test -f selenium"
+        wrap([$class: 'Xvfb']) {
+            sh "mvn test -f selenium"
+        }
     }
 }
 
