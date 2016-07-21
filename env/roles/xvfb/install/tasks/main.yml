@@ -1,0 +1,7 @@
+# file: roles/xvfb/install/tasks/main.yml
+
+- name: enabled rhel-7-server-optional-rpms
+  command: subscription-manager repos --enable rhel-7-server-optional-rpms
+
+- name: install Xvfb
+  yum: name=xorg-x11-server-Xvfb state=present

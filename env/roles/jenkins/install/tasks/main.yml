@@ -50,6 +50,9 @@
 - name: copy ansible configuration
   template: src=org.jenkinsci.plugins.ansible.AnsibleInstallation.xml dest={{ jenkins_home }}
 
+- name: copy Xvfb configuration
+  template: src=org.jenkinsci.plugins.xvfb.Xvfb.xml dest={{ jenkins_home }}
+
 - name: restart Jenkins
   service: name={{ package_name }} state=restarted
 
@@ -67,6 +70,9 @@
 
 - name: install Pipeline Plugin via cli
   command: java -jar /tmp/jenkins-cli.jar -s http://localhost:{{ jenkins_port }} install-plugin --username admin --password {{ pass.stdout }} workflow-aggregator
+
+- name: install Xvfb Plugin via cli
+  command: java -jar /tmp/jenkins-cli.jar -s http://localhost:{{ jenkins_port }} install-plugin --username admin --password {{ pass.stdout }} xvfb
 
 - name: stop Jenkins
   service: name={{ package_name }} state=stopped

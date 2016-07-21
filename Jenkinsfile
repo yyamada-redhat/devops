@@ -31,6 +31,13 @@ node {
     ansiblePlaybook inventory: 'env/hosts', playbook: 'env/deploy.yml', extras: '--extra-vars "jenkins_build_ear=' + pwd() + '/dev/ear/target//ear-0.1-SNAPSHOT.ear"'
 }
 
+stage 'ui-test'
+node {
+    withEnv(["PATH+MAVEN=${tool 'maven 3.3.9'}/bin"]) {
+        sh "mvn test -f selenium"
+    }
+}
+
 stage 'setup-production'
 node {
     ansiblePlaybook inventory: 'env/hosts', playbook: 'env/dbservers.yml'
