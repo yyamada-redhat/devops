@@ -20,8 +20,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
 import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -266,18 +266,18 @@ public class OrderServiceBeanArqTestIT {
     //    }
 
     @Deployment
-    public static EnterpriseArchive createDeployment() {
+    public static WebArchive createDeployment() {
         // テスト対象JARを生成
         JavaArchive jar = ShrinkWrap
                 .create(JavaArchive.class, "test-service.jar")
                 .addClasses(OrderService.class, OrderServiceBean.class,
                         OrderServiceBeanArqTestIT.class);
         // EARを生成（daoとentityはpom.xmlから取得して生成）
-        EnterpriseArchive ear = ShrinkWrapHelper.archiveWithLibs(
-                EnterpriseArchive.class, "test.ear", "pom.xml");
-        ear.addAsModule(jar);
+        WebArchive war = ShrinkWrapHelper.archiveWithLibs(WebArchive.class,
+                "test.war", "pom.xml");
+        war.addAsLibraries(jar);
 
-        return ear;
+        return war;
     }
 
 }

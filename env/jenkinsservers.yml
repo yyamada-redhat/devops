@@ -13,3 +13,5 @@
     - { role: sonarqube/install, tags: ["sonarqube/install"] }
     - { role: ruby/install, tags: ["serverspec/install"] }
     - { role: serverspec/install, tags: ["serverspec/install"] }
+    - { role: xvfb/install, tags: ["xvfb/install"] }
+    - { role: firefox/install, tags: ["firefox/install"] }
