@@ -3,7 +3,7 @@
     var module = angular.module('app.controllers', []);
 
     module.controller('RootController', function ($scope, $rootScope, $http) {
-        $rootScope.restUrl = 'http://192.168.56.101:8080/order-manage-api/rs';
+        $rootScope.restUrl = './rs';
 
         listAll($scope, $rootScope, $http);
 
