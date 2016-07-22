@@ -1,6 +1,6 @@
 stage 'build'
 node {
-    git url: 'https://github.com/yyamada-redhat/devops.git'
+//    git url: 'https://github.com/yyamada-redhat/devops.git'
     withEnv(["PATH+MAVEN=${tool 'maven 3.3.9'}/bin"]) {
         sh "mvn clean install -f dev -P development -P sonar-coverage"
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
