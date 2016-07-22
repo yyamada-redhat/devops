@@ -28,7 +28,7 @@ node {
 
 stage 'deploy-staging'
 node {
-    ansiblePlaybook inventory: 'env/hosts', playbook: 'env/deploy.yml', extras: '--extra-vars "jenkins_build_ear=' + pwd() + '/dev/ear/target//ear-0.1-SNAPSHOT.ear"'
+    ansiblePlaybook inventory: 'env/hosts', playbook: 'env/deploy.yml', extras: '--extra-vars "jenkins_build_ear=' + pwd() + '/dev/web/target/order-manage.war"'
 }
 
 stage 'ui-test'
@@ -53,7 +53,7 @@ node {
 
 stage 'deploy-production'
 node {
-    ansiblePlaybook inventory: 'env/hosts', playbook: 'env/deploy.yml', extras: '--extra-vars "jenkins_build_ear=' + pwd() + '/dev/ear/target//ear-0.1-SNAPSHOT.ear"'
+    ansiblePlaybook inventory: 'env/hosts', playbook: 'env/deploy.yml', extras: '--extra-vars "jenkins_build_ear=' + pwd() + '/dev/web/target/order-manage.war"'
 }
 
 stage 'performance-test'
