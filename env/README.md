@@ -133,17 +133,49 @@ PLAY RECAP ********************************************************************
 192.168.140.137            : ok=38   changed=13    unreachable=0    failed=0   
 ```
 
-## 3. Jenkins のビルドパイプラインビューからビルドパイプラインを実行
+## 3. 構築された Jenkins の設定を変更
 
-1. `http://<Jenkins サーバのホスト>:28080` にアクセスする。
+1. Jenkins サーバにて初期パスワードを取得する。
+```
+$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
 
-1. 右フレームに表示されているテーブルの "Build pipeline" タブを選択し、ビルドパイプライン画面を表示する。
+1. `http://<Jenkins サーバのホスト>:28080` にアクセスし、ユーザー名:admin、 パスワード:＜上記で取得した初期パスワード＞ でログインする。
 
-1. "Run" ボタンをクリックしてビルドパイプラインを起動する。
- - 起動後、ビルドパイプラインが表示されない（表示が更新されない）場合は、リロード等を行って再描画する
- - 初回起動時は "build" および "integration_test" ジョブに時間がかかるが、これは maven が初回ビルド時に依存ライブラリをすべて取得していることに起因している
+1. Pipeline Sample -> configure で、既に登録されているパイプラインの設定にて、Github Organization の Scan credencials に自身のGitHubアカウントを設定する。
 
-ビルドパイプラインとして Jenkins に設定されている各ジョブの役割は以下の通り。
+1. ビルド・トリガ の Periodically if not otherwise run にチェックを入れて Interval を設定する。
+ - この設定により GitHub のポーリングを開始する。
+
+
+1. ページ下部の "Save" をクリックしてパイプラインの設定を保存する。
+ - この後パイプラインの初回スキャンが行われる。
+
+## 4. Git に ブランチを PUSH してパイプラインを起動
+
+1. ローカルに devops リポジトリをクローンする。
+```
+$ git clone https://github.com/yyamada-redhat/devops.git
+```
+
+1. クローンしたリポジトリにて develop ブランチを作成してチェックアウトする。
+```
+$ git checkout -b develop
+```
+
+1. チェックアウトしたブランチに何らかの変更を加え、コミットする。
+```
+$ git commit
+```
+
+1. 変更したプランチをプッシュする。
+```
+$ git push --set-upstream develop
+```
+
+## - TODO - Appendix a
+
+パイプラインとして Jenkins に設定されている各ジョブの役割は以下の通り。
 - build
  - ソースコードの取得
  - ソースコードのビルド
